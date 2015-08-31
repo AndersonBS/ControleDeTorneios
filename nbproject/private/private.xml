@@ -5,8 +5,12 @@
         <group>
             <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/src/java/model/Jogador.java</file>
             <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/src/java/model/Equipe.java</file>
+            <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/src/java/controller/EquipeDAO.java</file>
             <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/src/java/hibernate.cfg.xml</file>
             <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/src/java/view/TesteConexao.java</file>
+            <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/web/index.jsp</file>
+            <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/src/java/controller/JogadorDAO.java</file>
+            <file>file:/home/anderson/documents/projetos/web/PA2_A06_TrabalhoA1/web/include.jsp</file>
         </group>
     </open-files>
 </project-private>

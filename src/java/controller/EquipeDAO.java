@@ -18,15 +18,17 @@ import org.hibernate.Transaction;
  */
 public class EquipeDAO {
     
-    public void save(Equipe equipe) {
+    public boolean save(Equipe equipe) {
         Session sessao = null;
         Transaction transacao = null;
+        boolean sucesso = false;
 
         try {
             sessao = Conexao.getSession();
             transacao = sessao.beginTransaction();
             sessao.save(equipe);
             transacao.commit();
+            sucesso = true;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível inserir a equipe. Erro: " + hibernateException.getMessage());
         } finally {
@@ -36,17 +38,20 @@ public class EquipeDAO {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
         }
+        return sucesso;
     }
 
-    public void update(Equipe equipe) {
+    public boolean update(Equipe equipe) {
         Session sessao = null;
         Transaction transacao = null;
+        boolean sucesso = false;
 
         try {
             sessao = Conexao.getSession();
             transacao = sessao.beginTransaction();
             sessao.update(equipe);
             transacao.commit();
+            sucesso = true;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível alterar a equipe. Erro: " + hibernateException.getMessage());
         } finally {
@@ -56,17 +61,20 @@ public class EquipeDAO {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
         }
+        return sucesso;
     }
 
-    public void delete(Equipe equipe) {
+    public boolean delete(Equipe equipe) {
         Session sessao = null;
         Transaction transacao = null;
+        boolean sucesso = false;
 
         try {
             sessao = Conexao.getSession();
             transacao = sessao.beginTransaction();
             sessao.delete(equipe);
             transacao.commit();
+            sucesso = true;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível apagar a equipe. Erro: " + hibernateException.getMessage());
         } finally {
@@ -76,6 +84,7 @@ public class EquipeDAO {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
         }
+        return sucesso;
     }
 
     public List<Equipe> retrieve() {
