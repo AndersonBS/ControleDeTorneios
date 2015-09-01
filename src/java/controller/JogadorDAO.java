@@ -18,15 +18,17 @@ import org.hibernate.Transaction;
  */
 public class JogadorDAO {
     
-    public void save(Jogador jogador) {
+    public boolean save(Jogador jogador) {
         Session sessao = null;
         Transaction transacao = null;
+        boolean sucesso = false;
 
         try {
             sessao = Conexao.getSession();
             transacao = sessao.beginTransaction();
             sessao.save(jogador);
             transacao.commit();
+            sucesso = true;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível inserir o jogador. Erro: " + hibernateException.getMessage());
         } finally {
@@ -36,17 +38,20 @@ public class JogadorDAO {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
         }
+        return sucesso;
     }
 
-    public void update(Jogador jogador) {
+    public boolean update(Jogador jogador) {
         Session sessao = null;
         Transaction transacao = null;
+        boolean sucesso = false;
 
         try {
             sessao = Conexao.getSession();
             transacao = sessao.beginTransaction();
             sessao.update(jogador);
             transacao.commit();
+            sucesso = true;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível alterar o jogador. Erro: " + hibernateException.getMessage());
         } finally {
@@ -56,17 +61,20 @@ public class JogadorDAO {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
         }
+        return sucesso;
     }
 
-    public void delete(Jogador jogador) {
+    public boolean delete(Jogador jogador) {
         Session sessao = null;
         Transaction transacao = null;
+        boolean sucesso = false;
 
         try {
             sessao = Conexao.getSession();
             transacao = sessao.beginTransaction();
             sessao.delete(jogador);
             transacao.commit();
+            sucesso = true;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível apagar o jogador. Erro: " + hibernateException.getMessage());
         } finally {
@@ -76,6 +84,7 @@ public class JogadorDAO {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
         }
+        return sucesso;
     }
 
     public List<Jogador> retrieve() {

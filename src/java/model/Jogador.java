@@ -52,7 +52,22 @@ public class Jogador {
     
     @Column(name = "posicao")
     private String posicao;
+    
+    public Jogador() {
+        
+    }
 
+    public Jogador(String nome, long cpf, Date dataNascimento, Date dataCadastro, String email, String telefone, String equipe, String posicao) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.dataCadastro = dataCadastro;
+        this.email = email;
+        this.telefone = telefone;
+        this.equipe = equipe;
+        this.posicao = posicao;
+    }
+    
     public int getId() {
         return id;
     }

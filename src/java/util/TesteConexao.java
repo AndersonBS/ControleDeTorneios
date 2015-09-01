@@ -15,16 +15,16 @@ import org.hibernate.Session;
 public class TesteConexao {
  
     public static void main(String[] args) {
-            Session sessao = null;
-            try {
-                    sessao = Conexao.getSession();
-                    System.out.println("Conectou!");
-            } catch(Exception ex) {
-                System.out.println("Nope!");
-                System.out.println(ex.getMessage());
-                ex.printStackTrace();
-            } finally {
-                sessao.close();
-            }
-	}
+        Session sessao = null;
+        try {
+            sessao = Conexao.getSession();
+            System.out.println("Conectou!");
+        } catch (Exception ex) {
+            System.out.println("Nope!");
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+    }
 }

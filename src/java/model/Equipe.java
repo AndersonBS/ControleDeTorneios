@@ -20,6 +20,18 @@ public class Equipe {
     private String enderecoWeb;
     private String fone;
 
+    public Equipe() {
+        
+    }
+    
+    public Equipe(String nome, Date dataFundacao, String email, String enderecoWeb, String fone) {
+        this.nome = nome;
+        this.dataFundacao = dataFundacao;
+        this.email = email;
+        this.enderecoWeb = enderecoWeb;
+        this.fone = fone;
+    }
+    
     public int getId() {
         return id;
     }

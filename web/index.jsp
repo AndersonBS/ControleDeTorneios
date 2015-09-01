@@ -29,10 +29,10 @@
             <h3>PROFESSOR: EDUARDO COMIN</h3>
             <h3>ACADÊMICO: ANDERSON B. SENSOLO</h3>
             <h1></h1><br>
-            <a href="cadastrarEquipe.jsp" class="btn btn-primary">Cadastrar Equipe</a>
-            <a href="listarEquipe.jsp" class="btn btn-primary">Listar Equipe</a>
-            <a href="cadastrarJogador.jsp" class="btn btn-primary">Cadastrar Jogador</a>
-            <a href="listarJogador.jsp" class="btn btn-primary">Listar Jogador</a>
+            <a href="cadastrarEquipe.jsp" class="btn btn-primary">Cadastrar Equipes</a>
+            <a href="listarEquipe.jsp" class="btn btn-primary">Listar Equipes</a>
+            <a href="cadastrarJogador.jsp" class="btn btn-primary">Cadastrar Jogadores</a>
+            <a href="listarJogador.jsp" class="btn btn-primary">Listar Jogadores</a>
         </div>
         
     </body>
