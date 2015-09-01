@@ -5,6 +5,7 @@
  */
 package util;
 
+import controller.Conexao;
 import controller.EquipeDAO;
 import controller.JogadorDAO;
 import java.util.Date;
@@ -33,6 +34,8 @@ public class PopulaDB {
         jogadorDAO.save(new Jogador("Jogador 3", 1511505615, new Date("03/03/2003"), new Date("03/03/2015"), "jogador3@gmail.com", "(49)3456-7890", "Equipe 3", "Posição 3"));
         jogadorDAO.save(new Jogador("Jogador 4", 1651518981, new Date("04/04/2004"), new Date("04/04/2015"), "jogador4@gmail.com", "(49)0123-4567", "Equipe 4", "Posição 4"));
         jogadorDAO.save(new Jogador("Jogador 5", 1166811535, new Date("05/05/2005"), new Date("05/05/2015"), "jogador5@gmail.com", "(49)9012-3456", "Equipe 5", "Posição 5"));
+        
+        Conexao.stopConnectionProvider();
         
     }
     

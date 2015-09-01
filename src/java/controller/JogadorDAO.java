@@ -33,7 +33,9 @@ public class JogadorDAO {
             System.out.println("Não foi possível inserir o jogador. Erro: " + hibernateException.getMessage());
         } finally {
             try {
-                sessao.close();
+                if (sessao.isOpen()) {
+                    sessao.close();
+                }
             } catch (Exception exception) {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
@@ -56,7 +58,9 @@ public class JogadorDAO {
             System.out.println("Não foi possível alterar o jogador. Erro: " + hibernateException.getMessage());
         } finally {
             try {
-                sessao.close();
+                if (sessao.isOpen()) {
+                    sessao.close();
+                }
             } catch (Exception exception) {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
@@ -79,7 +83,9 @@ public class JogadorDAO {
             System.out.println("Não foi possível apagar o jogador. Erro: " + hibernateException.getMessage());
         } finally {
             try {
-                sessao.close();
+                if (sessao.isOpen()) {
+                    sessao.close();
+                }
             } catch (Exception exception) {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
@@ -104,7 +110,9 @@ public class JogadorDAO {
             System.out.println("Não foi possível recuperar os jogadores. Erro: " + hibernateException.getMessage());
         } finally {
             try {
-                sessao.close();
+                if (sessao.isOpen()) {
+                    sessao.close();
+                }
             } catch (Exception exception) {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
@@ -130,7 +138,9 @@ public class JogadorDAO {
             System.out.println("Não foi possível recuperar o jogador. Erro: " + hibernateException.getMessage());
         } finally {
             try {
-                sessao.close();
+                if (sessao.isOpen()) {
+                    sessao.close();
+                }
             } catch (Exception exception) {
                 System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
             }
