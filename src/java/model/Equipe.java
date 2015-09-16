@@ -6,18 +6,41 @@
 package model;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author anderson
  */
+
+@Entity
+@Table(name = "equipe")
 public class Equipe {
    
+    @Id
+    @GeneratedValue
+    @Column(name = "idEquipe")
     private int id;
+    
+    @Column(name = "nome")
     private String nome;
+    
+    @Column(name = "dataFundacao")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataFundacao;
+    
+    @Column(name = "email")
     private String email;
+    
+    @Column(name = "enderecoWeb")
     private String enderecoWeb;
+    
+    @Column(name = "fone")
     private String fone;
 
     public Equipe() {

@@ -24,7 +24,7 @@ public class Jogador {
     
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "idJogador")
     private int id;
     
     @Column(name = "nome")
