@@ -9,7 +9,9 @@
     <property name="hibernate.connection.password">unoesc</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
+    <mapping class="model.InscricaoEquipe"/>
     <mapping class="model.Jogador"/>
-    <mapping class="model.Equipe"/>
+    <mapping class="model.Posicao"/>
+    <mapping class="model.Torneio"/>
   </session-factory>
 </hibernate-configuration>

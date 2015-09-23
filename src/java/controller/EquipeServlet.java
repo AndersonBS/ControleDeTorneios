@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Equipe;
+import model.InscricaoEquipe;
 
 /**
  *
@@ -42,7 +42,7 @@ public class EquipeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             EquipeDAO equipeDAO = new EquipeDAO();
-            Equipe equipe = new Equipe();
+            InscricaoEquipe equipe = new InscricaoEquipe();
             HttpSession session = request.getSession(false);
             
             if ("salvar".equals(request.getParameter("operacao")) || "alterar".equals(request.getParameter("operacao"))) {

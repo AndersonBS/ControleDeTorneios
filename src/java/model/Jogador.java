@@ -19,13 +19,21 @@ import javax.persistence.Temporal;
  */
 
 @Entity
-@Table(name = "jogador")
+@Table(name = "Jogador")
 public class Jogador {
     
     @Id
     @GeneratedValue
     @Column(name = "idJogador")
     private int id;
+    
+    // many -1
+    @Column(name = "inscricaoEquipe")
+    private InscricaoEquipe inscricaoEquipe;
+    
+    // many -1
+    @Column(name = "posicao")
+    private Posicao posicao;
     
     @Column(name = "nome")
     private String nome;
@@ -44,32 +52,43 @@ public class Jogador {
     @Column(name = "email")
     private String email;
     
-    @Column(name = "telefone")
-    private String telefone;
+    @Column(name = "altura")
+    private float altura;
     
-    @Column(name = "equipe")
-    private String equipe;
+    @Column(name = "peso")
+    private float peso;
     
-    @Column(name = "posicao")
-    private String posicao;
+    @Column(name = "pais")
+    private String pais;
     
     public Jogador() {
         
     }
 
-    public Jogador(String nome, long cpf, Date dataNascimento, Date dataCadastro, String email, String telefone, String equipe, String posicao) {
+    public Jogador(int id, InscricaoEquipe inscricaoEquipe, Posicao posicao, String nome, long cpf, Date dataNascimento, Date dataCadastro, String email, float altura, float peso, String pais) {
+        this.id = id;
+        this.inscricaoEquipe = inscricaoEquipe;
+        this.posicao = posicao;
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.dataCadastro = dataCadastro;
         this.email = email;
-        this.telefone = telefone;
-        this.equipe = equipe;
-        this.posicao = posicao;
+        this.altura = altura;
+        this.peso = peso;
+        this.pais = pais;
     }
-    
+
     public int getId() {
         return id;
+    }
+
+    public InscricaoEquipe getInscricaoEquipe() {
+        return inscricaoEquipe;
+    }
+
+    public Posicao getPosicao() {
+        return posicao;
     }
 
     public String getNome() {
@@ -92,20 +111,28 @@ public class Jogador {
         return email;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public float getAltura() {
+        return altura;
     }
 
-    public String getEquipe() {
-        return equipe;
+    public float getPeso() {
+        return peso;
     }
 
-    public String getPosicao() {
-        return posicao;
+    public String getPais() {
+        return pais;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setInscricaoEquipe(InscricaoEquipe inscricaoEquipe) {
+        this.inscricaoEquipe = inscricaoEquipe;
+    }
+
+    public void setPosicao(Posicao posicao) {
+        this.posicao = posicao;
     }
 
     public void setNome(String nome) {
@@ -128,16 +155,16 @@ public class Jogador {
         this.email = email;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setAltura(float altura) {
+        this.altura = altura;
     }
 
-    public void setEquipe(String equipe) {
-        this.equipe = equipe;
+    public void setPeso(float peso) {
+        this.peso = peso;
     }
 
-    public void setPosicao(String posicao) {
-        this.posicao = posicao;
+    public void setPais(String pais) {
+        this.pais = pais;
     }
     
 }

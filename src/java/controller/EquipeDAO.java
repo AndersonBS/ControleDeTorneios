@@ -6,7 +6,7 @@
 package controller;
 
 import java.util.List;
-import model.Equipe;
+import model.InscricaoEquipe;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,7 +18,7 @@ import org.hibernate.Transaction;
  */
 public class EquipeDAO {
     
-    public boolean save(Equipe equipe) {
+    public boolean save(InscricaoEquipe equipe) {
         Session sessao = null;
         Transaction transacao = null;
         boolean sucesso = false;
@@ -43,7 +43,7 @@ public class EquipeDAO {
         return sucesso;
     }
 
-    public boolean update(Equipe equipe) {
+    public boolean update(InscricaoEquipe equipe) {
         Session sessao = null;
         Transaction transacao = null;
         boolean sucesso = false;
@@ -68,7 +68,7 @@ public class EquipeDAO {
         return sucesso;
     }
 
-    public boolean delete(Equipe equipe) {
+    public boolean delete(InscricaoEquipe equipe) {
         Session sessao = null;
         Transaction transacao = null;
         boolean sucesso = false;
@@ -93,11 +93,11 @@ public class EquipeDAO {
         return sucesso;
     }
 
-    public List<Equipe> retrieve() {
+    public List<InscricaoEquipe> retrieve() {
         Session sessao = null;
         Transaction transacao = null;
         Query consulta = null;
-        List<Equipe> resultado = null;
+        List<InscricaoEquipe> resultado = null;
 
         try {
             sessao = Conexao.getSession();
@@ -120,8 +120,8 @@ public class EquipeDAO {
         return null;
     }
 
-    public Equipe findEquipe(int id) {
-        Equipe equipe = null;
+    public InscricaoEquipe findEquipe(int id) {
+        InscricaoEquipe equipe = null;
         Session sessao = null;
         Transaction transacao = null;
         Query consulta = null;
@@ -131,7 +131,7 @@ public class EquipeDAO {
             transacao = sessao.beginTransaction();
             consulta = sessao.createQuery("from Equipe where id = :parametro");
             consulta.setInteger("parametro", id);
-            equipe = (Equipe) consulta.uniqueResult();
+            equipe = (InscricaoEquipe) consulta.uniqueResult();
             transacao.commit();
             return equipe;
         } catch (HibernateException hibernateException) {
