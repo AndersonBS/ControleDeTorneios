@@ -8,10 +8,15 @@ package model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -27,12 +32,14 @@ public class Jogador {
     @Column(name = "idJogador")
     private int id;
     
-    // many -1
-    @Column(name = "inscricaoEquipe")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codInscricaoEquipe")
+    @Cascade(CascadeType.ALL)
     private InscricaoEquipe inscricaoEquipe;
     
-    // many -1
-    @Column(name = "posicao")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codPosicao")
+    @Cascade(CascadeType.ALL)
     private Posicao posicao;
     
     @Column(name = "nome")

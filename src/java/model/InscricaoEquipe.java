@@ -9,10 +9,15 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.type.EnumType;
 
 /**
@@ -29,8 +34,9 @@ public class InscricaoEquipe {
     @Column(name = "idInscricaoEquipe")
     private int id;
     
-    // many -1
-    @Column(name = "torneio")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codTorneio")
+    @Cascade(CascadeType.ALL)
     private Torneio torneio;
     
     @Column(name = "nome")

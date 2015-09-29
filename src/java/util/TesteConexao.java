@@ -25,6 +25,7 @@ public class TesteConexao {
             ex.printStackTrace();
         } finally {
             sessao.close();
+            Conexao.stopConnectionProvider();
         }
     }
 }

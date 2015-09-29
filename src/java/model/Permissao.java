@@ -8,9 +8,14 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -26,16 +31,19 @@ public class Permissao {
     @Column(name = "idPosicao")
     private int id;
     
-    // many -1
-    @Column(name = "usuario")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codUsuario")
+    @Cascade(CascadeType.ALL)
     private Usuario usuario;
     
-    // many -1
-    @Column(name = "inscricaoEquipe")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codInscricaoEquipe")
+    @Cascade(CascadeType.ALL)
     private InscricaoEquipe inscricaoEquipe;
     
-    // many -1
-    @Column(name = "torneio")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codTorneio")
+    @Cascade(CascadeType.ALL)
     private Torneio torneio;
     
     public Permissao() {
