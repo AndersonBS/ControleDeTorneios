@@ -37,7 +37,7 @@ public class Torneio {
     private Date finalRealizacao;
     
     @Column(name = "frequenciaPartidas")
-    private int frequenciaPartidas;
+    private int frequenciaPartidas; //(1 ou 2 por semana)
     
     @Column(name = "inicioInscricoes")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -47,11 +47,11 @@ public class Torneio {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date finalInscricoes;
     
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "nomeDoTorneio")
+    private String nomeDoTorneio; //nome do torneio
     
-    @Column(name = "responsavel")
-    private String responsavel;
+    @Column(name = "nomeDoResponsavel")
+    private String nomeDoResponsavel;
     
     @Column(name = "enderecoWeb")
     private String enderecoWeb;
@@ -75,15 +75,15 @@ public class Torneio {
         
     }
 
-    public Torneio(int id, Date inicioRealizacao, Date finalRealizacao, int frequenciaPartidas, Date inicioInscricoes, Date finalInscricoes, String nome, String responsavel, String enderecoWeb, String email, float custoPorJogador, int numeroMinimoJogadores, int numeroMaximoJogadores, int numeroEquipes) {
+    public Torneio(int id, Date inicioRealizacao, Date finalRealizacao, int frequenciaPartidas, Date inicioInscricoes, Date finalInscricoes, String nomeDoTorneio, String nomeDoResponsavel, String enderecoWeb, String email, float custoPorJogador, int numeroMinimoJogadores, int numeroMaximoJogadores, int numeroEquipes) {
         this.id = id;
         this.inicioRealizacao = inicioRealizacao;
         this.finalRealizacao = finalRealizacao;
         this.frequenciaPartidas = frequenciaPartidas;
         this.inicioInscricoes = inicioInscricoes;
         this.finalInscricoes = finalInscricoes;
-        this.nome = nome;
-        this.responsavel = responsavel;
+        this.nomeDoTorneio = nomeDoTorneio;
+        this.nomeDoResponsavel = nomeDoResponsavel;
         this.enderecoWeb = enderecoWeb;
         this.email = email;
         this.custoPorJogador = custoPorJogador;
@@ -116,12 +116,12 @@ public class Torneio {
         return finalInscricoes;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeDoTorneio() {
+        return nomeDoTorneio;
     }
 
-    public String getResponsavel() {
-        return responsavel;
+    public String getNomeDoResponsavel() {
+        return nomeDoResponsavel;
     }
 
     public String getEnderecoWeb() {
@@ -172,12 +172,12 @@ public class Torneio {
         this.finalInscricoes = finalInscricoes;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeDoTorneio(String nomeDoTorneio) {
+        this.nomeDoTorneio = nomeDoTorneio;
     }
 
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
+    public void setNomeDoResponsavel(String nomeDoResponsavel) {
+        this.nomeDoResponsavel = nomeDoResponsavel;
     }
 
     public void setEnderecoWeb(String enderecoWeb) {
@@ -203,7 +203,7 @@ public class Torneio {
     public void setNumeroEquipes(int numeroEquipes) {
         this.numeroEquipes = numeroEquipes;
     }
-    
+
     
     
 }

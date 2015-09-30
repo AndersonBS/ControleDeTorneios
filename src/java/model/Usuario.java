@@ -38,19 +38,19 @@ public class Usuario {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCadastro;
     
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "nomeCompleto")
+    private String nomeCompleto;
     
     public Usuario() {
         
     }
 
-    public Usuario(int id, String login, String senha, Date dataCadastro, String nome) {
+    public Usuario(int id, String login, String senha, Date dataCadastro, String nomeCompleto) {
         this.id = id;
         this.login = login;
         this.senha = senha;
         this.dataCadastro = dataCadastro;
-        this.nome = nome;
+        this.nomeCompleto = nomeCompleto;
     }
 
     public int getId() {
@@ -69,8 +69,8 @@ public class Usuario {
         return dataCadastro;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeCompleto() {
+        return nomeCompleto;
     }
 
     public void setId(int id) {
@@ -89,8 +89,8 @@ public class Usuario {
         this.dataCadastro = dataCadastro;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
     }
-    
+
 }

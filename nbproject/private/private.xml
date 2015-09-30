@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/controller/JogadorServlet.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/model/Usuario.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/util/PopulaDB.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/util/TesteConexao.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/model/Posicao.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/model/Torneio.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/model/Jogador.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/controller/Conexao.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/model/InscricaoEquipe.java</file>
-            <file>file:/C:/Users/272273/Downloads/progapl_ii_201502_272273/src/java/model/Permissao.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/model/Jogador.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/model/Permissao.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/model/InscricaoEquipe.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/util/PopulaDB.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/util/TesteConexao.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/model/Posicao.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/model/Torneio.java</file>
+            <file>file:/home/anderson/documents/projetos/web/progapl_ii_201502_272273/src/java/model/Usuario.java</file>
         </group>
     </open-files>
 </project-private>

@@ -8,7 +8,6 @@ package model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.type.EnumType;
 
 /**
  *
@@ -39,16 +37,16 @@ public class InscricaoEquipe {
     @Cascade(CascadeType.ALL)
     private Torneio torneio;
     
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "nomeDaEquipe")
+    private String nomeDaEquipe;
     
     @Column(name = "statusInscricao")
-    private String statusInscricao;
+    private String statusInscricao; //(em preenchimento, confirmada e paga)
     
     @Column(name = "fechamentoInscricao")
     private boolean fechamentoInscricao;
     
-    @Column(name = "precoTotalInscricao")
+    @Column(name = "precoTotalInscricao") //calculado quando confirmada
     private float precoTotalInscricao;
     
     @Column(name = "dataFundacao")
@@ -61,11 +59,17 @@ public class InscricaoEquipe {
     @Column(name = "enderecoWeb")
     private String enderecoWeb;
     
-    @Column(name = "fone")
-    private String fone;
+    @Column(name = "telefone")
+    private String telefone;
     
     @Column(name = "endereco")
     private String logradouro;
+    
+    @Column(name = "numeroDaResidencia")
+    private int numeroDaResidencia;
+    
+    @Column(name = "complemento")
+    private String complemento;
     
     @Column(name = "cep")
     private String cep;
@@ -77,18 +81,20 @@ public class InscricaoEquipe {
         
     }
 
-    public InscricaoEquipe(int id, Torneio torneio, String nome, String statusInscricao, boolean fechamentoInscricao, float precoTotalInscricao, Date dataFundacao, String email, String enderecoWeb, String fone, String logradouro, String cep, String cidade) {
+    public InscricaoEquipe(int id, Torneio torneio, String nomeDaEquipe, String statusInscricao, boolean fechamentoInscricao, float precoTotalInscricao, Date dataFundacao, String email, String enderecoWeb, String telefone, String logradouro, int numeroDaResidencia, String complemento, String cep, String cidade) {
         this.id = id;
         this.torneio = torneio;
-        this.nome = nome;
+        this.nomeDaEquipe = nomeDaEquipe;
         this.statusInscricao = statusInscricao;
         this.fechamentoInscricao = fechamentoInscricao;
         this.precoTotalInscricao = precoTotalInscricao;
         this.dataFundacao = dataFundacao;
         this.email = email;
         this.enderecoWeb = enderecoWeb;
-        this.fone = fone;
+        this.telefone = telefone;
         this.logradouro = logradouro;
+        this.numeroDaResidencia = numeroDaResidencia;
+        this.complemento = complemento;
         this.cep = cep;
         this.cidade = cidade;
     }
@@ -101,8 +107,8 @@ public class InscricaoEquipe {
         return torneio;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeDaEquipe() {
+        return nomeDaEquipe;
     }
 
     public String getStatusInscricao() {
@@ -129,12 +135,20 @@ public class InscricaoEquipe {
         return enderecoWeb;
     }
 
-    public String getFone() {
-        return fone;
+    public String getTelefone() {
+        return telefone;
     }
 
     public String getLogradouro() {
         return logradouro;
+    }
+
+    public int getNumeroDaResidencia() {
+        return numeroDaResidencia;
+    }
+
+    public String getComplemento() {
+        return complemento;
     }
 
     public String getCep() {
@@ -153,8 +167,8 @@ public class InscricaoEquipe {
         this.torneio = torneio;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeDaEquipe(String nomeDaEquipe) {
+        this.nomeDaEquipe = nomeDaEquipe;
     }
 
     public void setStatusInscricao(String statusInscricao) {
@@ -181,12 +195,20 @@ public class InscricaoEquipe {
         this.enderecoWeb = enderecoWeb;
     }
 
-    public void setFone(String fone) {
-        this.fone = fone;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
+    }
+
+    public void setNumeroDaResidencia(int numeroDaResidencia) {
+        this.numeroDaResidencia = numeroDaResidencia;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 
     public void setCep(String cep) {
@@ -196,5 +218,5 @@ public class InscricaoEquipe {
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
-    
+
 }

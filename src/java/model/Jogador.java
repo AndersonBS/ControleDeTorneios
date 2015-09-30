@@ -42,8 +42,8 @@ public class Jogador {
     @Cascade(CascadeType.ALL)
     private Posicao posicao;
     
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "nomeCompleto")
+    private String nomeCompleto;
     
     @Column(name = "cpf")
     private long cpf;
@@ -72,11 +72,11 @@ public class Jogador {
         
     }
 
-    public Jogador(int id, InscricaoEquipe inscricaoEquipe, Posicao posicao, String nome, long cpf, Date dataNascimento, Date dataCadastro, String email, float altura, float peso, String pais) {
+    public Jogador(int id, InscricaoEquipe inscricaoEquipe, Posicao posicao, String nomeCompleto, long cpf, Date dataNascimento, Date dataCadastro, String email, float altura, float peso, String pais) {
         this.id = id;
         this.inscricaoEquipe = inscricaoEquipe;
         this.posicao = posicao;
-        this.nome = nome;
+        this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.dataCadastro = dataCadastro;
@@ -98,8 +98,8 @@ public class Jogador {
         return posicao;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeCompleto() {
+        return nomeCompleto;
     }
 
     public long getCpf() {
@@ -142,8 +142,8 @@ public class Jogador {
         this.posicao = posicao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
     }
 
     public void setCpf(long cpf) {
@@ -173,5 +173,5 @@ public class Jogador {
     public void setPais(String pais) {
         this.pais = pais;
     }
-    
+
 }
