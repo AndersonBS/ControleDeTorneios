@@ -6,7 +6,7 @@
 package util;
 
 import controller.Conexao;
-import controller.EquipeDAO;
+import controller.InscricaoEquipeDAO;
 import controller.JogadorDAO;
 import java.util.Date;
 import model.InscricaoEquipe;
@@ -20,7 +20,7 @@ public class PopulaDB {
     
     public static void main(String[] args) {
         
-        EquipeDAO equipeDAO = new EquipeDAO();
+        InscricaoEquipeDAO equipeDAO = new InscricaoEquipeDAO();
         JogadorDAO jogadorDAO = new JogadorDAO();
         
         //equipeDAO.save(new InscricaoEquipe("Equipe 1", new Date("01/01/2015"), "equipe1@gmail.com", "www.equipe1.com.br", "(49)1234-5678"));

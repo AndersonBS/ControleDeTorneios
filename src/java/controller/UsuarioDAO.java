@@ -6,7 +6,7 @@
 package controller;
 
 import java.util.List;
-import model.Jogador;
+import model.Usuario;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -16,9 +16,9 @@ import org.hibernate.Transaction;
  *
  * @author anderson
  */
-public class JogadorDAO {
+public class UsuarioDAO {
     
-    public boolean save(Jogador jogador) {
+    public boolean save(Usuario usuario) {
         Session session = null;
         Transaction transaction = null;
         boolean success = false;
@@ -26,11 +26,11 @@ public class JogadorDAO {
         try {
             session = Conexao.getSession();
             transaction = session.beginTransaction();
-            session.save(jogador);
+            session.save(usuario);
             transaction.commit();
             success = true;
         } catch (HibernateException hibernateException) {
-            System.out.println("Não foi possível inserir o jogador. Erro: " + hibernateException.getMessage());
+            System.out.println("Não foi possível inserir o usuário. Erro: " + hibernateException.getMessage());
         } finally {
             try {
                 if (session.isOpen()) {
@@ -43,7 +43,7 @@ public class JogadorDAO {
         return success;
     }
 
-    public boolean update(Jogador jogador) {
+    public boolean update(Usuario usuario) {
         Session session = null;
         Transaction transaction = null;
         boolean success = false;
@@ -51,11 +51,11 @@ public class JogadorDAO {
         try {
             session = Conexao.getSession();
             transaction = session.beginTransaction();
-            session.update(jogador);
+            session.update(usuario);
             transaction.commit();
             success = true;
         } catch (HibernateException hibernateException) {
-            System.out.println("Não foi possível alterar o jogador. Erro: " + hibernateException.getMessage());
+            System.out.println("Não foi possível alterar o usuário. Erro: " + hibernateException.getMessage());
         } finally {
             try {
                 if (session.isOpen()) {
@@ -68,7 +68,7 @@ public class JogadorDAO {
         return success;
     }
 
-    public boolean delete(Jogador jogador) {
+    public boolean delete(Usuario usuario) {
         Session session = null;
         Transaction transaction = null;
         boolean success = false;
@@ -76,11 +76,11 @@ public class JogadorDAO {
         try {
             session = Conexao.getSession();
             transaction = session.beginTransaction();
-            session.delete(jogador);
+            session.delete(usuario);
             transaction.commit();
             success = true;
         } catch (HibernateException hibernateException) {
-            System.out.println("Não foi possível apagar o jogador. Erro: " + hibernateException.getMessage());
+            System.out.println("Não foi possível apagar o usuário. Erro: " + hibernateException.getMessage());
         } finally {
             try {
                 if (session.isOpen()) {
@@ -93,21 +93,21 @@ public class JogadorDAO {
         return success;
     }
 
-    public List<Jogador> retrieve() {
+    public List<Usuario> retrieve() {
         Session session = null;
         Transaction transaction = null;
         Query query = null;
-        List<Jogador> result = null;
+        List<Usuario> result = null;
 
         try {
             session = Conexao.getSession();
             transaction = session.beginTransaction();
-            query = session.createQuery("from Jogador");
+            query = session.createQuery("from Usuario");
             result = query.list();
             transaction.commit();
             return result;
         } catch (HibernateException hibernateException) {
-            System.out.println("Não foi possível recuperar os jogadores. Erro: " + hibernateException.getMessage());
+            System.out.println("Não foi possível recuperar os usuários. Erro: " + hibernateException.getMessage());
         } finally {
             try {
                 if (session.isOpen()) {
@@ -120,8 +120,8 @@ public class JogadorDAO {
         return null;
     }
 
-    public Jogador retrieve(int idJogador) {
-        Jogador jogador = null;
+    public Usuario retrieve(int idUsuario) {
+        Usuario usuario = null;
         Session session = null;
         Transaction transaction = null;
         Query query = null;
@@ -129,13 +129,13 @@ public class JogadorDAO {
         try {
             session = Conexao.getSession();
             transaction = session.beginTransaction();
-            query = session.createQuery("from Jogador where id = :parametro");
-            query.setInteger("parametro", idJogador);
-            jogador = (Jogador) query.uniqueResult();
+            query = session.createQuery("from Usuario where id = :parametro");
+            query.setInteger("parametro", idUsuario);
+            usuario = (Usuario) query.uniqueResult();
             transaction.commit();
-            return jogador;
+            return usuario;
         } catch (HibernateException hibernateException) {
-            System.out.println("Não foi possível recuperar o jogador. Erro: " + hibernateException.getMessage());
+            System.out.println("Não foi possível recuperar o usuário. Erro: " + hibernateException.getMessage());
         } finally {
             try {
                 if (session.isOpen()) {
@@ -147,5 +147,5 @@ public class JogadorDAO {
         }
         return null;
     }
-
+    
 }

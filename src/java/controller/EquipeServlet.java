@@ -41,7 +41,7 @@ public class EquipeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            EquipeDAO equipeDAO = new EquipeDAO();
+            InscricaoEquipeDAO equipeDAO = new InscricaoEquipeDAO();
             InscricaoEquipe equipe = new InscricaoEquipe();
             HttpSession session = request.getSession(false);
             
