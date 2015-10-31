@@ -5,12 +5,18 @@
  */
 package controller;
 
+import java.util.Arrays;
 import java.util.List;
 import model.Jogador;
+import model.Jogador_AUD;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.envers.query.AuditQuery;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 
 /**
  *
@@ -136,6 +142,39 @@ public class JogadorDAO {
             return jogador;
         } catch (HibernateException hibernateException) {
             System.out.println("Não foi possível recuperar o jogador. Erro: " + hibernateException.getMessage());
+        } finally {
+            try {
+                if (session.isOpen()) {
+                    session.close();
+                }
+            } catch (Exception exception) {
+                System.out.println("Não foi possível fechar a sessão. Erro: " + exception.getMessage());
+            }
+        }
+        return null;
+    }
+    
+
+    public List<Jogador_AUD> auditoria() {
+        
+        Session session = null;
+        Transaction transaction = null;
+        Query query = null;
+        List<Jogador_AUD> result = null;
+
+        try {
+            session = Conexao.getSession();
+            AuditReader auditReader = AuditReaderFactory.get(session);
+            transaction = session.beginTransaction();
+            AuditQuery auditQuery = auditReader.createQuery().forRevisionsOfEntity(Jogador.class, true, true);
+            
+            
+            
+            
+            transaction.commit();
+            return auditQuery.getResultList();
+        } catch (HibernateException hibernateException) {
+            System.out.println("Não foi possível recuperar os dados da auditoria. Erro: " + hibernateException.getMessage());
         } finally {
             try {
                 if (session.isOpen()) {

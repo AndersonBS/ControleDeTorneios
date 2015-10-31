@@ -147,5 +147,9 @@ public class InscricaoEquipeDAO {
         }
         return null;
     }
+    
+    public void auditoria() {
+        
+    }
 
 }

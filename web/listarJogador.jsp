@@ -21,7 +21,7 @@
     </head>
     <body>
         
-        <!-- Lista Abastecimentos -->
+        <!-- Lista Jogadores -->
         <div align="center">
             <h1>Jogadores Cadastrados</h1><h1></h1>
             <h1></h1>   
@@ -31,14 +31,16 @@
                 </c:if>
                 <table class="table table-striped table-hover myTable">
                     <tr class="myTh">
-                        <th class="text-center">Nome</th>
+                        <th class="text-center">Inscrição Equipe</th>
+                        <th class="text-center">Posição</th>
+                        <th class="text-center">Nome Completo</th>
                         <th class="text-center">CPF</th>
                         <th class="text-center">Data de Nascimento</th>
-                        <th class="text-center">Data de Cadastro</th>
                         <th class="text-center">E-mail</th>
-                        <th class="text-center">Telefone</th>
-                        <th class="text-center">Equipe</th>
-                        <th class="text-center">Posição</th>
+                        <th class="text-center">Altura</th>
+                        <th class="text-center">Peso</th>
+                        <th class="text-center">País</th>
+                        <th class="text-center">Data de Cadastro</th>
                         <th class="text-center" colspan="2" style="width: 1%">Ações</th>
                     </tr>
                     <c:forEach var="jogador" varStatus="status" items="${jogadorDAO.retrieve()}">
@@ -49,15 +51,17 @@
                             <c:otherwise>
                                 <tr class="active myRow">
                             </c:otherwise>
-                        </c:choose>           
-                            <td align="center">${jogador.nome}</td>
+                        </c:choose> 
+                            <td align="center">${jogador.inscricaoEquipe.nomeDaEquipe}</td>
+                            <td align="center">${jogador.posicao.nome}</td>
+                            <td align="center">${jogador.nomeCompleto}</td>
                             <td align="center">${jogador.cpf}</td>
                             <td align="center"><fmt:formatDate pattern="dd/MM/yyyy" value="${jogador.dataNascimento}"/></td>
-                            <td align="center"><fmt:formatDate pattern="dd/MM/yyyy" value="${jogador.dataCadastro}"/></td>
                             <td align="center">${jogador.email}</td>
-                            <td align="center">${jogador.telefone}</td>
-                            <td align="center">${jogador.equipe}</td>
-                            <td align="center">${jogador.posicao}</td>
+                            <td align="center">${jogador.altura} M</td>
+                            <td align="center">${jogador.peso} Kg</td>
+                            <td align="center">${jogador.pais}</td>
+                            <td align="center"><fmt:formatDate pattern="dd/MM/yyyy" value="${jogador.dataCadastro}"/></td>
                             <form method="post" action="cadastrarJogador.jsp">
                                 <td align="center">
                                     <input type="hidden" name="altJogador" id="altJogador" value="${jogador.id}">
@@ -77,10 +81,12 @@
                         </tr>
                     </c:forEach >
                 </table>
-                <button type="button" class="btn btn-primary" onclick="location.href='cadastrarEquipe.jsp'"
-                        style="font-weight: bold;">Cadastrar Equipes</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='cadastrarInscricaoEquipe.jsp'"
+                        style="font-weight: bold;">Inscrever Equipes</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='cadastrarJogador.jsp'" 
                         style="margin-left: 3px; font-weight: bold;">Cadastrar Jogadores</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='index.jsp'" 
+                        style="margin-left: 3px; font-weight: bold;">Home</button>
                 <br><br>
             </div>
         </div>

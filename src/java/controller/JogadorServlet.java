@@ -42,19 +42,23 @@ public class JogadorServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             JogadorDAO jogadorDAO = new JogadorDAO();
+            InscricaoEquipeDAO inscricaoEquipeDAO = new InscricaoEquipeDAO();
+            PosicaoDAO posicaoDAO = new PosicaoDAO();
             Jogador jogador = new Jogador();
             HttpSession session = request.getSession(false);
             
             if ("salvar".equals(request.getParameter("operacao")) || "alterar".equals(request.getParameter("operacao"))) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                jogador.setNome(request.getParameter("nome"));
+                jogador.setInscricaoEquipe(inscricaoEquipeDAO.retrieve(Integer.parseInt(request.getParameter("inscricaoEquipe"))));
+                jogador.setPosicao(posicaoDAO.retrieve(Integer.parseInt(request.getParameter("posicao"))));
+                jogador.setNomeCompleto(request.getParameter("nomeCompleto"));
                 jogador.setCpf(Long.parseLong(request.getParameter("cpf")));
                 jogador.setDataNascimento(new Date(dateFormat.parse(request.getParameter("dataNascimento")).getTime()));
-                jogador.setDataCadastro(new Date(dateFormat.parse(request.getParameter("dataCadastro")).getTime()));
                 jogador.setEmail(request.getParameter("email"));
-                jogador.setTelefone(request.getParameter("telefone"));
-                jogador.setEquipe(request.getParameter("equipe"));
-                jogador.setPosicao(request.getParameter("posicao"));
+                jogador.setAltura(Float.parseFloat(request.getParameter("altura")));
+                jogador.setPeso(Float.parseFloat(request.getParameter("peso")));
+                jogador.setPais(request.getParameter("pais"));
+                jogador.setDataCadastro(new Date(dateFormat.parse(request.getParameter("dataCadastro")).getTime()));
             }
             
             ServletContext servletContext = getServletContext();

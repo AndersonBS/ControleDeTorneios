@@ -148,4 +148,8 @@ public class TorneioDAO {
         return null;
     }
     
+    public void auditoria() {
+        
+    }
+    
 }

@@ -25,8 +25,8 @@ import model.InscricaoEquipe;
  *
  * @author anderson
  */
-@WebServlet(name = "EquipeServlet", urlPatterns = {"/EquipeServlet"})
-public class EquipeServlet extends HttpServlet {
+@WebServlet(name = "InscricaoEquipeServlet", urlPatterns = {"/InscricaoEquipeServlet"})
+public class InscricaoEquipeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,17 +41,27 @@ public class EquipeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            InscricaoEquipeDAO equipeDAO = new InscricaoEquipeDAO();
-            InscricaoEquipe equipe = new InscricaoEquipe();
+            InscricaoEquipeDAO inscricaoEquipeDAO = new InscricaoEquipeDAO();
+            TorneioDAO torneioDAO = new TorneioDAO();
+            InscricaoEquipe inscricaoEquipe = new InscricaoEquipe();
             HttpSession session = request.getSession(false);
             
             if ("salvar".equals(request.getParameter("operacao")) || "alterar".equals(request.getParameter("operacao"))) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                equipe.setNome(request.getParameter("nome"));
-                equipe.setDataFundacao(new Date(dateFormat.parse(request.getParameter("dataFundacao")).getTime()));
-                equipe.setEmail(request.getParameter("email"));
-                equipe.setEnderecoWeb(request.getParameter("enderecoWeb"));
-                equipe.setFone(request.getParameter("fone"));
+                inscricaoEquipe.setTorneio(torneioDAO.retrieve(Integer.parseInt(request.getParameter("torneio"))));
+                inscricaoEquipe.setNomeDaEquipe(request.getParameter("nomeDaEquipe"));
+                inscricaoEquipe.setStatusInscricao("Em Preenchimento");
+                inscricaoEquipe.setFechamentoInscricao(false);
+                inscricaoEquipe.setPrecoTotalInscricao(0);
+                inscricaoEquipe.setDataFundacao(new Date(dateFormat.parse(request.getParameter("dataFundacao")).getTime()));
+                inscricaoEquipe.setEmail(request.getParameter("email"));
+                inscricaoEquipe.setEnderecoWeb(request.getParameter("enderecoWeb"));
+                inscricaoEquipe.setTelefone(request.getParameter("telefone"));
+                inscricaoEquipe.setLogradouro(request.getParameter("logradouro"));
+                inscricaoEquipe.setNumeroDaResidencia(Integer.parseInt(request.getParameter("numeroDaResidencia")));
+                inscricaoEquipe.setComplemento(request.getParameter("complemento"));
+                inscricaoEquipe.setCidade(request.getParameter("cidade"));
+                inscricaoEquipe.setCep(Long.parseLong(request.getParameter("cep")));
             }
             
             
@@ -60,32 +70,32 @@ public class EquipeServlet extends HttpServlet {
             String mensagem = "";
             switch (request.getParameter("operacao")) {
                 case "salvar": {
-                    if (equipeDAO.save(equipe)) {
-                        mensagem = "<font color=\"green\">Equipe cadastrada com sucesso!</font>";
+                    if (inscricaoEquipeDAO.save(inscricaoEquipe)) {
+                        mensagem = "<font color=\"green\">Inscrição da Equipe cadastrada com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de realizar o cadastro!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/cadastrarEquipe.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/cadastrarInscricaoEquipe.jsp");
                     break;
                 }
                 case "alterar": {
-                    equipe.setId(Integer.parseInt(request.getParameter("idEquipe")));
-                    if (equipeDAO.update(equipe)) {
-                        mensagem = "<font color=\"green\">Equipe alterada com sucesso!</font>";
+                    inscricaoEquipe.setId(Integer.parseInt(request.getParameter("idInscricaoEquipe")));
+                    if (inscricaoEquipeDAO.update(inscricaoEquipe)) {
+                        mensagem = "<font color=\"green\">Inscrição da Equipe alterada com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de alterar a equipe!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarEquipe.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/listarInscricaoEquipe.jsp");
                     break;
                 }
                 case "apagar": {
-                    equipe.setId(Integer.parseInt(request.getParameter("excEquipe")));
-                    if (equipeDAO.delete(equipe)) {
-                        mensagem = "<font color=\"green\">Equipe apagada com sucesso!</font>";
+                    inscricaoEquipe.setId(Integer.parseInt(request.getParameter("excInscricaoEquipe")));
+                    if (inscricaoEquipeDAO.delete(inscricaoEquipe)) {
+                        mensagem = "<font color=\"green\">Inscrição da Equipe apagada com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de apagar a equipe!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarEquipe.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/listarInscricaoEquipe.jsp");
                 }
             }
             request.setAttribute("message", mensagem);

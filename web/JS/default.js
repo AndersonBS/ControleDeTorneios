@@ -50,3 +50,8 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 };
+
+$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})

@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.envers.Audited;
+
 
 /**
  *
@@ -25,7 +28,8 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "Jogador")
-public class Jogador {
+@Audited
+public class Jogador implements Serializable {
     
     @Id
     @GeneratedValue

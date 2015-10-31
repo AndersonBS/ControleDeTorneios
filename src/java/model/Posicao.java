@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Posicao")
+@Audited
 public class Posicao {
     
     @Id

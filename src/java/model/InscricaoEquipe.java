@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -25,6 +26,7 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "InscricaoEquipe")
+@Audited
 public class InscricaoEquipe {
    
     @Id
@@ -62,7 +64,7 @@ public class InscricaoEquipe {
     @Column(name = "telefone")
     private String telefone;
     
-    @Column(name = "endereco")
+    @Column(name = "logradouro")
     private String logradouro;
     
     @Column(name = "numeroDaResidencia")
@@ -71,17 +73,17 @@ public class InscricaoEquipe {
     @Column(name = "complemento")
     private String complemento;
     
-    @Column(name = "cep")
-    private String cep;
-    
     @Column(name = "cidade")
     private String cidade;
+    
+    @Column(name = "cep")
+    private long cep;
 
     public InscricaoEquipe() {
         
     }
 
-    public InscricaoEquipe(int id, Torneio torneio, String nomeDaEquipe, String statusInscricao, boolean fechamentoInscricao, float precoTotalInscricao, Date dataFundacao, String email, String enderecoWeb, String telefone, String logradouro, int numeroDaResidencia, String complemento, String cep, String cidade) {
+    public InscricaoEquipe(int id, Torneio torneio, String nomeDaEquipe, String statusInscricao, boolean fechamentoInscricao, float precoTotalInscricao, Date dataFundacao, String email, String enderecoWeb, String telefone, String logradouro, int numeroDaResidencia, String complemento, long cep, String cidade) {
         this.id = id;
         this.torneio = torneio;
         this.nomeDaEquipe = nomeDaEquipe;
@@ -151,7 +153,7 @@ public class InscricaoEquipe {
         return complemento;
     }
 
-    public String getCep() {
+    public long getCep() {
         return cep;
     }
 
@@ -211,7 +213,7 @@ public class InscricaoEquipe {
         this.complemento = complemento;
     }
 
-    public void setCep(String cep) {
+    public void setCep(long cep) {
         this.cep = cep;
     }
 

@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "Torneio")
+@Audited
 public class Torneio {
     
     @Id
@@ -37,7 +39,7 @@ public class Torneio {
     private Date finalRealizacao;
     
     @Column(name = "frequenciaPartidas")
-    private int frequenciaPartidas; //(1 ou 2 por semana)
+    private byte frequenciaPartidas; //(1 ou 2 por semana)
     
     @Column(name = "inicioInscricoes")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -63,19 +65,19 @@ public class Torneio {
     private float custoPorJogador;
     
     @Column(name = "numeroMinimoJogadores")
-    private int numeroMinimoJogadores;
+    private byte numeroMinimoJogadores;
     
     @Column(name = "numeroMaximoJogadores")
-    private int numeroMaximoJogadores;
+    private byte numeroMaximoJogadores;
     
     @Column(name = "numeroEquipes")
-    private int numeroEquipes;
+    private byte numeroEquipes;
     
     public Torneio() {
         
     }
 
-    public Torneio(int id, Date inicioRealizacao, Date finalRealizacao, int frequenciaPartidas, Date inicioInscricoes, Date finalInscricoes, String nomeDoTorneio, String nomeDoResponsavel, String enderecoWeb, String email, float custoPorJogador, int numeroMinimoJogadores, int numeroMaximoJogadores, int numeroEquipes) {
+    public Torneio(int id, Date inicioRealizacao, Date finalRealizacao, byte frequenciaPartidas, Date inicioInscricoes, Date finalInscricoes, String nomeDoTorneio, String nomeDoResponsavel, String enderecoWeb, String email, float custoPorJogador, byte numeroMinimoJogadores, byte numeroMaximoJogadores, byte numeroEquipes) {
         this.id = id;
         this.inicioRealizacao = inicioRealizacao;
         this.finalRealizacao = finalRealizacao;
@@ -104,7 +106,7 @@ public class Torneio {
         return finalRealizacao;
     }
 
-    public int getFrequenciaPartidas() {
+    public byte getFrequenciaPartidas() {
         return frequenciaPartidas;
     }
 
@@ -136,15 +138,15 @@ public class Torneio {
         return custoPorJogador;
     }
 
-    public int getNumeroMinimoJogadores() {
+    public byte getNumeroMinimoJogadores() {
         return numeroMinimoJogadores;
     }
 
-    public int getNumeroMaximoJogadores() {
+    public byte getNumeroMaximoJogadores() {
         return numeroMaximoJogadores;
     }
 
-    public int getNumeroEquipes() {
+    public byte getNumeroEquipes() {
         return numeroEquipes;
     }
 
@@ -160,7 +162,7 @@ public class Torneio {
         this.finalRealizacao = finalRealizacao;
     }
 
-    public void setFrequenciaPartidas(int frequenciaPartidas) {
+    public void setFrequenciaPartidas(byte frequenciaPartidas) {
         this.frequenciaPartidas = frequenciaPartidas;
     }
 
@@ -192,15 +194,15 @@ public class Torneio {
         this.custoPorJogador = custoPorJogador;
     }
 
-    public void setNumeroMinimoJogadores(int numeroMinimoJogadores) {
+    public void setNumeroMinimoJogadores(byte numeroMinimoJogadores) {
         this.numeroMinimoJogadores = numeroMinimoJogadores;
     }
 
-    public void setNumeroMaximoJogadores(int numeroMaximoJogadores) {
+    public void setNumeroMaximoJogadores(byte numeroMaximoJogadores) {
         this.numeroMaximoJogadores = numeroMaximoJogadores;
     }
 
-    public void setNumeroEquipes(int numeroEquipes) {
+    public void setNumeroEquipes(byte numeroEquipes) {
         this.numeroEquipes = numeroEquipes;
     }
 

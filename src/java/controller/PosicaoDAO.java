@@ -148,4 +148,8 @@ public class PosicaoDAO {
         return null;
     }
     
+    public void auditoria() {
+        
+    }
+    
 }
