@@ -4,15 +4,20 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/PA2_A06_TrabalhoA1</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/PA2_TrabalhoA1</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">unoesc</property>
+    <property name="hibernate.connection.password"></property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="model.InscricaoEquipe"/>
     <mapping class="model.Jogador"/>
+    <mapping class="model.Permissao"/>
     <mapping class="model.Posicao"/>
+    <mapping class="model.TabelaClassificacao"/>
+    <mapping class="model.TabelaJogos"/>
     <mapping class="model.Torneio"/>
+    <mapping class="model.Usuario"/>
+    
     
     <listener class="org.hibernate.envers.event.AuditEventListener" type="post-insert"/>     
     <listener class="org.hibernate.envers.event.AuditEventListener" type="post-update"/>     

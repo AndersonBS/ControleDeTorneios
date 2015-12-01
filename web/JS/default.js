@@ -25,8 +25,8 @@ $(document).ready(function () {
         $("#search").removeAttr('hidden');
     });
     
-    $("#automovel").change(function () {
-        $("#automovel_form").submit();
+    $("#torneio").change(function () {
+        $("#torneio_form").submit();
     });
 });
 

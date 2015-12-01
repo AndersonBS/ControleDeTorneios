@@ -6,6 +6,7 @@
 
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -21,7 +23,8 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "Usuario")
-public class Usuario {
+@Audited
+public class Usuario implements Serializable {
     
     @Id
     @GeneratedValue
@@ -45,8 +48,7 @@ public class Usuario {
         
     }
 
-    public Usuario(int id, String login, String senha, Date dataCadastro, String nomeCompleto) {
-        this.id = id;
+    public Usuario(String login, String senha, Date dataCadastro, String nomeCompleto) {
         this.login = login;
         this.senha = senha;
         this.dataCadastro = dataCadastro;

@@ -25,15 +25,18 @@
     </head>
     <body>
         
+        <!-- Inclusão do Menu Superior padrão -->
+        <jsp:include page="navbar.jsp" />        
+        
         <c:choose>
             <c:when test="${param != null && param.altInscricaoEquipe != null}">
                 <h1 align="center">Alteração de Inscrição de Equipe</h1><h1></h1>
             </c:when>
             <c:otherwise>
-                <h1 align="center">Cadastro de Inscrição de Equipes</h1><h1></h1>
+                <h1 align="center">Inscrição de Equipe em ${selectedTorneio.nomeDoTorneio}</h1><h1></h1>
             </c:otherwise>
         </c:choose>
-        <form method="post" class="form-horizontal" action="InscricaoEquipeServlet">
+        <form method="post" class="form-horizontal" action="InscricaoEquipeServlet" enctype="multipart/form-data">
             <input type="hidden" id="operacao" name="operacao"
                    <c:choose>
                        <c:when test="${param != null && param.altInscricaoEquipe != null}">
@@ -43,22 +46,6 @@
                            value="salvar"
                        </c:otherwise>
                    </c:choose> >
-            <div class="form-group form-inline">
-                <label for="combustivel" class="col-sm-2 col-sm-offset-3 control-label">Torneio:</label>
-                <div class="col-sm-3 input-group"> 
-                    <select name="torneio" id="torneio" class="form-control">
-                        <jsp:useBean id="torneioDAO" class="controller.TorneioDAO"/>
-                        <c:forEach var="torneio" items="${torneioDAO.retrieve()}">
-                            <option value="${torneio.id}"
-                                <c:if test="${inscricaoEquipe != null && inscricaoEquipe.torneio.id == torneio.id}">
-                                    selected
-                                </c:if> >${torneio.nomeDoTorneio}</option>
-                        </c:forEach> 
-                    </select>
-                </div>
-                <button type="button" class="btn btn-primary" name="novoTorneio" id="novoTorneio" 
-                        onclick="location.href='cadastrarTorneio.jsp'" style="font-weight: bold;">+</button>
-            </div>
             <div class="form-group form-inline">
                 <label for="nomeDaEquipe" class="col-sm-2 col-sm-offset-3 control-label">Nome da Equipe:</label>
                 <div class="col-sm-3 input-group"> 
@@ -101,7 +88,7 @@
             <div class="form-group form-inline">
                 <label for="telefone" class="col-sm-2 col-sm-offset-3 control-label">Telefone:</label>
                 <div class="col-sm-3 input-group"> 
-                    <input type="text" required="true" class="form-control" name="telefone" id="telefone" 
+                    <input type="tel" required="true" class="form-control" name="telefone" id="telefone" 
                             placeholder="Digite o telefone da equipe"
                             <c:if test="${inscricaoEquipe != null}">
                                 value="${inscricaoEquipe.telefone}"
@@ -158,6 +145,22 @@
                             </c:if> >
                 </div>
             </div>
+            <div class="form-group form-inline">
+                <label for="logo" class="col-sm-2 col-sm-offset-3 control-label">Logo:</label>
+                <div class="col-sm-3 input-group">
+                    <label for="logo"><img name="show_foto" id="show_foto" width="145" height="145" 
+                            <c:choose>
+                                <c:when test="${inscricaoEquipe != null}">
+                                    src="LogoServlet?idInscricaoEquipe=${inscricaoEquipe.id}"
+                                </c:when>
+                                <c:otherwise>
+                                    src="IMG/sem_logo.jpg"
+                                </c:otherwise>
+                            </c:choose> />
+                    </label>
+                    <input type="file" name="logo" id="logo" accept="image/*" style="visibility: hidden;" onchange="readURL(this)">
+                </div>
+            </div>      
             <div class="form-group">
                 <label class="col-sm-2 col-sm-offset-3 control-label"></label>
                 <div class="col-sm-3 input-group">
@@ -171,10 +174,8 @@
                             <button type="reset" class="btn btn-primary" style="margin-left: 5px; font-weight: bold;">Limpar</button>
                         </c:otherwise>
                     </c:choose>
-                    <button type="button" class="btn btn-primary" onclick="location.href='listarInscricaoEquipe.jsp'" 
-                        style="margin-left: 5px; font-weight: bold;">Listar</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='index.jsp'" 
-                        style="margin-left: 3px; font-weight: bold;">Home</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='gerenciarInscricaoEquipe.jsp'" 
+                        style="margin-left: 5px; font-weight: bold;">Gerenciar</button>
                 </div>
             </div>
             <c:if test="${message != null && !message.isEmpty()}">

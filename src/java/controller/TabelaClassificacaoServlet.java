@@ -7,11 +7,19 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.InscricaoEquipe;
+import model.TabelaClassificacao;
+import model.Torneio;
 
 /**
  *
@@ -32,17 +40,34 @@ public class TabelaClassificacaoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TabelaClassificacaoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TabelaClassificacaoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        TabelaClassificacaoDAO tabelaClassificacaoDAO = new TabelaClassificacaoDAO();
+        InscricaoEquipeDAO inscricaoEquipeDAO = new InscricaoEquipeDAO();
+        HttpSession session = request.getSession(false);
+
+
+        ServletContext servletContext = getServletContext();
+        RequestDispatcher requestDispatcher = null;
+        String mensagem = "";
+        switch (request.getParameter("operacao")) {
+            case "criar": {
+                List<TabelaClassificacao> list = new ArrayList<>();
+                for (InscricaoEquipe inscricaoEquipe: inscricaoEquipeDAO.retrieve((Torneio) session.getAttribute("selectedTorneio"))) {
+                    TabelaClassificacao tabelaClassificacao = 
+                            new TabelaClassificacao(inscricaoEquipe.getTorneio(), inscricaoEquipe, 0, 0, 0, 0, 0);
+                    list.add(tabelaClassificacao);
+                }
+                if (tabelaClassificacaoDAO.delete((Torneio) session.getAttribute("selectedTorneio")) && tabelaClassificacaoDAO.save(list)) {
+                    mensagem = "<font color=\"green\">Tabela de classificação criada com sucesso!</font>";
+                } else {
+                    mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de salvar a tabela!</font>";
+                }
+                requestDispatcher = servletContext.getRequestDispatcher("/gerenciarTorneio.jsp");
+                break;
+            }
+        }
+        request.setAttribute("message", mensagem);
+        if (requestDispatcher != null) {
+            requestDispatcher.forward(request, response);
         }
     }
 

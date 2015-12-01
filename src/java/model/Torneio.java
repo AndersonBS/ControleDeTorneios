@@ -6,6 +6,7 @@
 
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,12 +24,15 @@ import org.hibernate.envers.Audited;
 @Entity
 @Table(name = "Torneio")
 @Audited
-public class Torneio {
+public class Torneio implements Serializable {
     
     @Id
     @GeneratedValue
     @Column(name = "idTorneio")
     private int id;
+    
+    @Column(name = "nomeDoTorneio")
+    private String nomeDoTorneio;
     
     @Column(name = "inicioRealizacao")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -48,9 +52,6 @@ public class Torneio {
     @Column(name = "finalInscricoes")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date finalInscricoes;
-    
-    @Column(name = "nomeDoTorneio")
-    private String nomeDoTorneio; //nome do torneio
     
     @Column(name = "nomeDoResponsavel")
     private String nomeDoResponsavel;
@@ -77,14 +78,13 @@ public class Torneio {
         
     }
 
-    public Torneio(int id, Date inicioRealizacao, Date finalRealizacao, byte frequenciaPartidas, Date inicioInscricoes, Date finalInscricoes, String nomeDoTorneio, String nomeDoResponsavel, String enderecoWeb, String email, float custoPorJogador, byte numeroMinimoJogadores, byte numeroMaximoJogadores, byte numeroEquipes) {
-        this.id = id;
+    public Torneio(String nomeDoTorneio, Date inicioRealizacao, Date finalRealizacao, byte frequenciaPartidas, Date inicioInscricoes, Date finalInscricoes, String nomeDoResponsavel, String enderecoWeb, String email, float custoPorJogador, byte numeroMinimoJogadores, byte numeroMaximoJogadores, byte numeroEquipes) {
+        this.nomeDoTorneio = nomeDoTorneio;
         this.inicioRealizacao = inicioRealizacao;
         this.finalRealizacao = finalRealizacao;
         this.frequenciaPartidas = frequenciaPartidas;
         this.inicioInscricoes = inicioInscricoes;
         this.finalInscricoes = finalInscricoes;
-        this.nomeDoTorneio = nomeDoTorneio;
         this.nomeDoResponsavel = nomeDoResponsavel;
         this.enderecoWeb = enderecoWeb;
         this.email = email;

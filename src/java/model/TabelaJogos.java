@@ -5,7 +5,10 @@
  */
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -25,7 +29,8 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "TabelaJogos")
-public class TabelaJogos {
+@Audited
+public class TabelaJogos implements Serializable {
     
     @Id
     @GeneratedValue
@@ -34,11 +39,10 @@ public class TabelaJogos {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codTorneio")
-    @Cascade(CascadeType.ALL)
     private Torneio torneio;
     
     @Column(name = "numeroRodada")
-    private long numeroRodada;
+    private int numeroRodada;
     
     @Column(name = "dataPartida")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -49,12 +53,10 @@ public class TabelaJogos {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codInscricaoEquipeCasa")
-    @Cascade(CascadeType.ALL)
     private InscricaoEquipe inscricaoEquipeCasa;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codInscricaoEquipeVisitante")
-    @Cascade(CascadeType.ALL)
     private InscricaoEquipe inscricaoEquipeVisitante;
     
     @Column(name = "placarEquipeCasa")
@@ -66,9 +68,8 @@ public class TabelaJogos {
     public TabelaJogos() {
         
     }
-    
-    public TabelaJogos(int id, Torneio torneio, long numeroRodada, Date dataPartida, String localPartida, InscricaoEquipe inscricaoEquipeCasa, InscricaoEquipe inscricaoEquipeVisitante, int placarEquipeCasa, int placarEquipeVisitante) {
-        this.id = id;
+
+    public TabelaJogos(Torneio torneio, int numeroRodada, Date dataPartida, String localPartida, InscricaoEquipe inscricaoEquipeCasa, InscricaoEquipe inscricaoEquipeVisitante, int placarEquipeCasa, int placarEquipeVisitante) {
         this.torneio = torneio;
         this.numeroRodada = numeroRodada;
         this.dataPartida = dataPartida;
@@ -87,7 +88,7 @@ public class TabelaJogos {
         return torneio;
     }
 
-    public long getNumeroRodada() {
+    public int getNumeroRodada() {
         return numeroRodada;
     }
 
@@ -123,7 +124,7 @@ public class TabelaJogos {
         this.torneio = torneio;
     }
 
-    public void setNumeroRodada(long numeroRodada) {
+    public void setNumeroRodada(int numeroRodada) {
         this.numeroRodada = numeroRodada;
     }
 
@@ -150,5 +151,5 @@ public class TabelaJogos {
     public void setPlacarEquipeVisitante(int placarEquipeVisitante) {
         this.placarEquipeVisitante = placarEquipeVisitante;
     }
-    
+        
 }

@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Permissao;
 import model.Torneio;
+import model.Usuario;
 
 /**
  *
@@ -69,6 +71,8 @@ public class TorneioServlet extends HttpServlet {
             switch (request.getParameter("operacao")) {
                 case "salvar": {
                     if (torneioDAO.save(torneio)) {
+                        PermissaoDAO permissaoDAO = new PermissaoDAO();
+                        permissaoDAO.save(new Permissao((Usuario) session.getAttribute("loggedInUser"), null, torneio));
                         mensagem = "<font color=\"green\">Torneio cadastrado com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de realizar o cadastro!</font>";
@@ -83,17 +87,23 @@ public class TorneioServlet extends HttpServlet {
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de alterar o torneio!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarTorneio.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarTorneio.jsp");
+                    break;
+                }
+                case "selecionar": {
+                    session.setAttribute("selectedTorneio", torneioDAO.retrieve(Integer.parseInt(request.getParameter("torneio"))));
+                    requestDispatcher = servletContext.getRequestDispatcher(request.getParameter("jsp_request_uri"));
                     break;
                 }
                 case "apagar": {
-                    torneio.setId(Integer.parseInt(request.getParameter("excTorneio")));
+                    session.removeAttribute("selectedTorneio");
+                    torneio = torneioDAO.retrieve(Integer.parseInt(request.getParameter("excTorneio")));
                     if (torneioDAO.delete(torneio)) {
                         mensagem = "<font color=\"green\">Torneio apagado com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de apagar o torneio!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarTorneio.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarTorneio.jsp");
                 }
             }
             request.setAttribute("message", mensagem);

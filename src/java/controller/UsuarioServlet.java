@@ -7,11 +7,14 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Usuario;
 
 /**
  *
@@ -33,16 +36,65 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UsuarioServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UsuarioServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            
+            ServletContext servletContext = getServletContext();
+            RequestDispatcher requestDispatcher = null;
+            String mensagem = "";
+            switch (request.getParameter("operation")) {
+                case "login": {
+                    Usuario usuario = usuarioDAO.isUsuario(request.getParameter("login_email"), request.getParameter("login_password"));
+                    if (usuario != null) {
+                        request.getSession().setAttribute("loggedInUser", usuario);
+                        requestDispatcher = servletContext.getRequestDispatcher("/home.jsp");
+                    } else {
+                        mensagem = "<font color=\"red\">E-mail e/ou Senha inválidos!</font>";
+                        requestDispatcher = servletContext.getRequestDispatcher("/index.jsp");
+                    }
+                    break;
+                }
+                case "register": {
+                    Usuario usuario = new Usuario();
+                    usuario.setNomeCompleto(request.getParameter("register_name"));
+                    usuario.setLogin(request.getParameter("register_email"));
+                    usuario.setSenha(request.getParameter("register_password"));
+                    if (usuarioDAO.save(usuario)) {
+                        mensagem = "<font color=\"green\">Usuário cadastrado com sucesso!</font>";
+                    } else {
+                        mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de cadastrar o usuário!</font>";
+                    }
+                    request.getSession().setAttribute("selectedAutomovel", null);
+                    requestDispatcher = servletContext.getRequestDispatcher("/index.jsp");
+                    break;
+                }
+                case "logout": {
+                    request.getSession().removeAttribute("loggedInUser");
+                    request.getSession().removeAttribute("selectedTorneio");
+                    requestDispatcher = servletContext.getRequestDispatcher("/index.jsp");
+                    break;
+                }
+                case "retrieve": {
+                    /*Properties props = new Properties();
+                    Session session = Session.getDefaultInstance(props, null);
+                    try {
+                        Message email = new MimeMessage(session);
+                        email.setFrom(new InternetAddress("anderson.sensolo@gmail.com", "Gmail.com Anderson"));
+                        email.addRecipient(Message.RecipientType.TO, new InternetAddress(request.getParameter("retrieve_email")));
+                        email.setSubject("Recuperar Senha");
+                        email.setText("Teste!!");
+                        Transport.send(email);
+                    } catch (AddressException addressException) {
+                        System.out.println(addressException.getMessage());
+                    } catch (MessagingException messagingException) {
+                        System.out.println(messagingException.getMessage());
+                    }*/
+                    break;
+                }
+            }
+            request.setAttribute("message", mensagem);
+            if (requestDispatcher != null) {
+                requestDispatcher.forward(request, response);
+            }
         }
     }
 

@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,7 +20,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import model.Jogador;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
 /**
  *
@@ -59,6 +62,14 @@ public class JogadorServlet extends HttpServlet {
                 jogador.setPeso(Float.parseFloat(request.getParameter("peso")));
                 jogador.setPais(request.getParameter("pais"));
                 jogador.setDataCadastro(new Date(dateFormat.parse(request.getParameter("dataCadastro")).getTime()));
+                Part foto = request.getPart("foto");
+                InputStream input = foto.getInputStream();
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                byte[] buffer = new byte[10240];
+                for (int length = 0; (length = input.read(buffer)) > 0;) {
+                    output.write(buffer, 0, length);
+                }
+                jogador.setFoto(output.toByteArray());
             }
             
             ServletContext servletContext = getServletContext();
@@ -81,17 +92,17 @@ public class JogadorServlet extends HttpServlet {
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de alterar o jogador!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarJogador.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarJogador.jsp");
                     break;
                 }
                 case "apagar": {
-                    jogador.setId(Integer.parseInt(request.getParameter("excJogador")));
+                    jogador = jogadorDAO.retrieve(Integer.parseInt(request.getParameter("excJogador")));
                     if (jogadorDAO.delete(jogador)) {
                         mensagem = "<font color=\"green\">Jogador apagado com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de apagar o jogador!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarJogador.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarJogador.jsp");
                 }
             }
             request.setAttribute("message", mensagem);

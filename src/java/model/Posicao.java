@@ -6,6 +6,7 @@
 
 package model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @Table(name = "Posicao")
 @Audited
-public class Posicao {
+public class Posicao implements Serializable {
     
     @Id
     @GeneratedValue
@@ -35,8 +36,7 @@ public class Posicao {
         
     }
 
-    public Posicao(int id, String nome) {
-        this.id = id;
+    public Posicao(String nome) {
         this.nome = nome;
     }
 

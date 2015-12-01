@@ -12,6 +12,7 @@
 
 <c:if test="${param != null && param.altJogador != null}">
     <c:set var="jogador" value="${jogadorDAO.retrieve(param.altJogador)}" scope="page"></c:set>
+    <c:set var="idJogador" value="${jogador.id}" scope="session"></c:set>
 </c:if>
 
 <!DOCTYPE html>
@@ -26,15 +27,18 @@
     </head>
     <body>
         
+        <!-- Inclusão do Menu Superior padrão -->
+        <jsp:include page="navbar.jsp" />        
+        
         <c:choose>
             <c:when test="${param != null && param.altJogador != null}">
                 <h1 align="center">Alteração de Jogador</h1><h1></h1>
             </c:when>
             <c:otherwise>
-                <h1 align="center">Cadastro de Jogador</h1><h1></h1>
+                <h1 align="center">Cadastro de Jogador em ${selectedTorneio.nomeDoTorneio}</h1><h1></h1>
             </c:otherwise>
         </c:choose>
-        <form method="post" class="form-horizontal" action="JogadorServlet">
+        <form method="post" class="form-horizontal" action="JogadorServlet" enctype="multipart/form-data">
             <input type="hidden" id="operacao" name="operacao"
                    <c:choose>
                        <c:when test="${param != null && param.altJogador != null}">
@@ -45,11 +49,11 @@
                        </c:otherwise>
                    </c:choose> >
             <div class="form-group form-inline">
-                <label for="inscricaoEquipe" class="col-sm-2 col-sm-offset-3 control-label">Inscrição da Equipe:</label>
+                <label for="inscricaoEquipe" class="col-sm-2 col-sm-offset-3 control-label">Equipe:</label>
                 <div class="col-sm-3 input-group"> 
                     <select name="inscricaoEquipe" id="inscricaoEquipe" class="form-control">
                         <jsp:useBean id="inscricaoEquipeDAO" class="controller.InscricaoEquipeDAO"/>
-                        <c:forEach var="inscricaoEquipe" items="${inscricaoEquipeDAO.retrieve()}">
+                        <c:forEach var="inscricaoEquipe" items="${inscricaoEquipeDAO.retrieve(loggedInUser, selectedTorneio)}">
                             <option value="${inscricaoEquipe.id}"
                                 <c:if test="${jogador != null && jogador.inscricaoEquipe.id == inscricaoEquipe.id}">
                                     selected
@@ -73,8 +77,6 @@
                         </c:forEach> 
                     </select>
                 </div>
-                <button type="button" class="btn btn-primary" name="novoPosicao" id="novoPosicao" 
-                    onclick="location.href='cadastrarPosicao.jsp'" style="font-weight: bold;">+</button>
             </div>     
             <div class="form-group form-inline">
                 <label for="nomeCompleto" class="col-sm-2 col-sm-offset-3 control-label">Nome Completo:</label>
@@ -161,6 +163,25 @@
                         </c:choose> >
                 </div>
             </div>
+            <div class="form-group form-inline">
+                <label for="foto" class="col-sm-2 col-sm-offset-3 control-label">Foto:</label>
+                <div class="col-sm-3 input-group">
+                    <label for="foto"><img name="show_foto" id="show_foto" width="150" height="200" 
+                            <c:choose>
+                                <c:when test="${jogador != null}">
+                                    src="FotoServlet?idJogador=${jogador.id}"
+                                </c:when>
+                                <c:otherwise>
+                                    src="IMG/sem_foto.png"
+                                </c:otherwise>
+                            </c:choose> />
+                    </label>
+                    <input type="file" name="foto" id="foto" accept="image/*" style="visibility: hidden;" onchange="readURL(this)"
+                            <c:if test="${jogador != null}">
+                                value="${jogador.foto}"
+                            </c:if> >
+                </div>
+            </div>  
             <div class="form-group">
                 <label class="col-sm-2 col-sm-offset-3 control-label"></label>
                 <div class="col-sm-3 input-group">
@@ -174,10 +195,8 @@
                             <button type="reset" class="btn btn-primary" style="margin-left: 5px; font-weight: bold;">Limpar</button>
                         </c:otherwise>
                     </c:choose>
-                    <button type="button" class="btn btn-primary" onclick="location.href='listarJogador.jsp'" 
-                        style="margin-left: 5px; font-weight: bold;">Listar</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='index.jsp'" 
-                        style="margin-left: 3px; font-weight: bold;">Home</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='gerenciarJogador.jsp'" 
+                        style="margin-left: 5px; font-weight: bold;">Gerenciar</button>
                 </div>
             </div>
             <c:if test="${message != null && !message.isEmpty()}">

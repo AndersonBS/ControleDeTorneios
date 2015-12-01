@@ -6,7 +6,6 @@
 package util;
 
 import controller.Conexao; 
-import controller.JogadorDAO;
 import org.hibernate.Session;
 
 /**
@@ -19,15 +18,12 @@ public class TesteConexao {
         Session sessao = null;
         try {
             sessao = Conexao.getSession();
-            JogadorDAO jogadorDAO = new JogadorDAO();
-            jogadorDAO.auditoria();
             System.out.println("Conectou!");
         } catch (Exception ex) {
             System.out.println("Nope!");
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         } finally {
-            sessao.close();
             Conexao.stopConnectionProvider();
         }
     }

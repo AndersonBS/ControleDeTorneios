@@ -6,6 +6,7 @@
 
 package model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -24,34 +26,31 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "Permissao")
-public class Permissao {
+@Audited
+public class Permissao implements Serializable {
     
     @Id
     @GeneratedValue
-    @Column(name = "idPosicao")
+    @Column(name = "idPermissao")
     private int id;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codUsuario")
-    @Cascade(CascadeType.ALL)
     private Usuario usuario;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codInscricaoEquipe")
-    @Cascade(CascadeType.ALL)
     private InscricaoEquipe inscricaoEquipe;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codTorneio")
-    @Cascade(CascadeType.ALL)
     private Torneio torneio;
     
     public Permissao() {
         
     }
 
-    public Permissao(int id, Usuario usuario, InscricaoEquipe inscricaoEquipe, Torneio torneio) {
-        this.id = id;
+    public Permissao(Usuario usuario, InscricaoEquipe inscricaoEquipe, Torneio torneio) {
         this.usuario = usuario;
         this.inscricaoEquipe = inscricaoEquipe;
         this.torneio = torneio;

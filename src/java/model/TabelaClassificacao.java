@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.hibernate.envers.Audited;
 
 /**
  *
@@ -23,7 +25,8 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "TabelaClassificacao")
-public class TabelaClassificacao {
+@Audited
+public class TabelaClassificacao implements Serializable {
     
     @Id
     @GeneratedValue
@@ -32,19 +35,11 @@ public class TabelaClassificacao {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codTorneio")
-    @Cascade(CascadeType.ALL)
     private Torneio torneio;
-    
-    @Column(name = "classificacao")
-    private int classificacao;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codInscricaoEquipe")
-    @Cascade(CascadeType.ALL)
     private InscricaoEquipe inscricaoEquipe;
-    
-    @Column(name = "numeroJogos")
-    private int numeroJogos;
     
     @Column(name = "numeroVitorias")
     private int numeroVitorias;
@@ -61,29 +56,34 @@ public class TabelaClassificacao {
     @Column(name = "numeroGolsSofridos")
     private int numeroGolsSofridos;
     
-    @Column(name = "saldoGols")
-    private int saldoGols;
-    
-    @Column(name = "percentualAproveitamento")
-    private int percentualAproveitamento;
-
     public TabelaClassificacao() {
         
     }
-    
-    public TabelaClassificacao(int id, Torneio torneio, int classificacao, InscricaoEquipe inscricaoEquipe, int numeroJogos, int numeroVitorias, int numeroEmpates, int numeroDerrotas, int numeroGolsMarcados, int numeroGolsSofridos, int saldoGols, int percentualAproveitamento) {
-        this.id = id;
+
+    public TabelaClassificacao(Torneio torneio, InscricaoEquipe inscricaoEquipe, int numeroVitorias, int numeroEmpates, int numeroDerrotas, int numeroGolsMarcados, int numeroGolsSofridos) {
         this.torneio = torneio;
-        this.classificacao = classificacao;
         this.inscricaoEquipe = inscricaoEquipe;
-        this.numeroJogos = numeroJogos;
         this.numeroVitorias = numeroVitorias;
         this.numeroEmpates = numeroEmpates;
         this.numeroDerrotas = numeroDerrotas;
         this.numeroGolsMarcados = numeroGolsMarcados;
         this.numeroGolsSofridos = numeroGolsSofridos;
-        this.saldoGols = saldoGols;
-        this.percentualAproveitamento = percentualAproveitamento;
+    }
+    
+    public int getPontos() {
+        return numeroVitorias * 3 + numeroEmpates;
+    }
+    
+    public int getNumeroJogos() {
+        return numeroVitorias + numeroEmpates + numeroDerrotas;
+    }
+    
+    public int getSaldoGols() {
+        return numeroGolsMarcados - numeroGolsSofridos;
+    }
+    
+    public int getPercentualAproveitamento() {
+        return (int) (33.333333334 / getNumeroJogos() * getPontos());
     }
 
     public int getId() {
@@ -94,16 +94,8 @@ public class TabelaClassificacao {
         return torneio;
     }
 
-    public int getClassificacao() {
-        return classificacao;
-    }
-
     public InscricaoEquipe getInscricaoEquipe() {
         return inscricaoEquipe;
-    }
-
-    public int getNumeroJogos() {
-        return numeroJogos;
     }
 
     public int getNumeroVitorias() {
@@ -126,14 +118,6 @@ public class TabelaClassificacao {
         return numeroGolsSofridos;
     }
 
-    public int getSaldoGols() {
-        return saldoGols;
-    }
-
-    public int getPercentualAproveitamento() {
-        return percentualAproveitamento;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -142,16 +126,8 @@ public class TabelaClassificacao {
         this.torneio = torneio;
     }
 
-    public void setClassificacao(int classificacao) {
-        this.classificacao = classificacao;
-    }
-
     public void setInscricaoEquipe(InscricaoEquipe inscricaoEquipe) {
         this.inscricaoEquipe = inscricaoEquipe;
-    }
-
-    public void setNumeroJogos(int numeroJogos) {
-        this.numeroJogos = numeroJogos;
     }
 
     public void setNumeroVitorias(int numeroVitorias) {
@@ -174,12 +150,5 @@ public class TabelaClassificacao {
         this.numeroGolsSofridos = numeroGolsSofridos;
     }
 
-    public void setSaldoGols(int saldoGols) {
-        this.saldoGols = saldoGols;
-    }
-
-    public void setPercentualAproveitamento(int percentualAproveitamento) {
-        this.percentualAproveitamento = percentualAproveitamento;
-    }
     
 }

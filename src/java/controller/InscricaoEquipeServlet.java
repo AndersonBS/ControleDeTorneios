@@ -5,7 +5,9 @@
  */
 package controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,7 +21,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import model.InscricaoEquipe;
+import model.Permissao;
+import model.Torneio;
+import model.Usuario;
 
 /**
  *
@@ -48,7 +54,7 @@ public class InscricaoEquipeServlet extends HttpServlet {
             
             if ("salvar".equals(request.getParameter("operacao")) || "alterar".equals(request.getParameter("operacao"))) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                inscricaoEquipe.setTorneio(torneioDAO.retrieve(Integer.parseInt(request.getParameter("torneio"))));
+                inscricaoEquipe.setTorneio(torneioDAO.retrieve(((Torneio) session.getAttribute("selectedTorneio")).getId()));
                 inscricaoEquipe.setNomeDaEquipe(request.getParameter("nomeDaEquipe"));
                 inscricaoEquipe.setStatusInscricao("Em Preenchimento");
                 inscricaoEquipe.setFechamentoInscricao(false);
@@ -62,6 +68,14 @@ public class InscricaoEquipeServlet extends HttpServlet {
                 inscricaoEquipe.setComplemento(request.getParameter("complemento"));
                 inscricaoEquipe.setCidade(request.getParameter("cidade"));
                 inscricaoEquipe.setCep(Long.parseLong(request.getParameter("cep")));
+                Part logo = request.getPart("logo");
+                InputStream input = logo.getInputStream();
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                byte[] buffer = new byte[10240];
+                for (int length = 0; (length = input.read(buffer)) > 0;) {
+                    output.write(buffer, 0, length);
+                }
+                inscricaoEquipe.setLogo(output.toByteArray());
             }
             
             
@@ -71,6 +85,8 @@ public class InscricaoEquipeServlet extends HttpServlet {
             switch (request.getParameter("operacao")) {
                 case "salvar": {
                     if (inscricaoEquipeDAO.save(inscricaoEquipe)) {
+                        PermissaoDAO permissaoDAO = new PermissaoDAO();
+                        permissaoDAO.save(new Permissao((Usuario) session.getAttribute("loggedInUser"), inscricaoEquipe, null));
                         mensagem = "<font color=\"green\">Inscrição da Equipe cadastrada com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de realizar o cadastro!</font>";
@@ -85,17 +101,43 @@ public class InscricaoEquipeServlet extends HttpServlet {
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de alterar a equipe!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarInscricaoEquipe.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarInscricaoEquipe.jsp");
                     break;
                 }
                 case "apagar": {
-                    inscricaoEquipe.setId(Integer.parseInt(request.getParameter("excInscricaoEquipe")));
+                    session.removeAttribute("selectedTorneio");
+                    inscricaoEquipe = inscricaoEquipeDAO.retrieve(Integer.parseInt(request.getParameter("excInscricaoEquipe")));
                     if (inscricaoEquipeDAO.delete(inscricaoEquipe)) {
                         mensagem = "<font color=\"green\">Inscrição da Equipe apagada com sucesso!</font>";
                     } else {
                         mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de apagar a equipe!</font>";
                     }
-                    requestDispatcher = servletContext.getRequestDispatcher("/listarInscricaoEquipe.jsp");
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarInscricaoEquipe.jsp");
+                    break;
+                }
+                case "finalizarInscricao": {
+                    inscricaoEquipe = inscricaoEquipeDAO.retrieve(Integer.parseInt(request.getParameter("finalizarInscricao")));
+                    inscricaoEquipe.setFechamentoInscricao(true);
+                    inscricaoEquipe.setStatusInscricao("Finalizada");
+                    if (inscricaoEquipeDAO.update(inscricaoEquipe)) {
+                        mensagem = "<font color=\"green\">Inscrição finalizada com sucesso!</font>";
+                    } else {
+                        mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de finalizar a inscrição!</font>";
+                    }
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarInscricaoEquipe.jsp");
+                    break;
+                }
+                case "pagamento": {
+                    inscricaoEquipe = inscricaoEquipeDAO.retrieve(Integer.parseInt(request.getParameter("pagamento")));
+                    inscricaoEquipe.setFechamentoInscricao(true);
+                    inscricaoEquipe.setStatusInscricao("Paga");
+                    if (inscricaoEquipeDAO.update(inscricaoEquipe)) {
+                        mensagem = "<font color=\"green\">Pagamento cadastrado com sucesso!</font>";
+                    } else {
+                        mensagem = "<font color=\"red\">Ocorreu um erro na tentativa de cadastrar o pagamento!</font>";
+                    }
+                    requestDispatcher = servletContext.getRequestDispatcher("/gerenciarTorneio.jsp");
+                    break;
                 }
             }
             request.setAttribute("message", mensagem);

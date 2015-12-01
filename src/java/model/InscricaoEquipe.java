@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +13,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
 /**
@@ -26,65 +26,81 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "InscricaoEquipe")
-@Audited
-public class InscricaoEquipe {
+public class InscricaoEquipe implements Serializable {
    
     @Id
     @GeneratedValue
     @Column(name = "idInscricaoEquipe")
+    @Audited
     private int id;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codTorneio")
-    @Cascade(CascadeType.ALL)
+    @Audited
     private Torneio torneio;
     
     @Column(name = "nomeDaEquipe")
+    @Audited
     private String nomeDaEquipe;
     
     @Column(name = "statusInscricao")
-    private String statusInscricao; //(em preenchimento, confirmada e paga)
+    @Audited
+    private String statusInscricao; //(em preenchimento, finalizada e paga)
     
     @Column(name = "fechamentoInscricao")
+    @Audited
     private boolean fechamentoInscricao;
     
     @Column(name = "precoTotalInscricao") //calculado quando confirmada
+    @Audited
     private float precoTotalInscricao;
     
     @Column(name = "dataFundacao")
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Audited
     private Date dataFundacao;
     
     @Column(name = "email")
+    @Audited
     private String email;
     
     @Column(name = "enderecoWeb")
+    @Audited
     private String enderecoWeb;
     
     @Column(name = "telefone")
+    @Audited
     private String telefone;
     
     @Column(name = "logradouro")
+    @Audited
     private String logradouro;
     
     @Column(name = "numeroDaResidencia")
+    @Audited
     private int numeroDaResidencia;
     
     @Column(name = "complemento")
+    @Audited
     private String complemento;
     
     @Column(name = "cidade")
+    @Audited
     private String cidade;
     
     @Column(name = "cep")
+    @Audited
     private long cep;
+    
+    @Column(name = "logo")
+    @Lob
+    private byte[] logo;
 
     public InscricaoEquipe() {
         
     }
 
-    public InscricaoEquipe(int id, Torneio torneio, String nomeDaEquipe, String statusInscricao, boolean fechamentoInscricao, float precoTotalInscricao, Date dataFundacao, String email, String enderecoWeb, String telefone, String logradouro, int numeroDaResidencia, String complemento, long cep, String cidade) {
-        this.id = id;
+    public InscricaoEquipe(Torneio torneio, String nomeDaEquipe, String statusInscricao, boolean fechamentoInscricao, float precoTotalInscricao, Date dataFundacao, String email, String enderecoWeb, String telefone, String logradouro, int numeroDaResidencia, String complemento, String cidade, long cep, byte[] logo) {
         this.torneio = torneio;
         this.nomeDaEquipe = nomeDaEquipe;
         this.statusInscricao = statusInscricao;
@@ -97,8 +113,9 @@ public class InscricaoEquipe {
         this.logradouro = logradouro;
         this.numeroDaResidencia = numeroDaResidencia;
         this.complemento = complemento;
-        this.cep = cep;
         this.cidade = cidade;
+        this.cep = cep;
+        this.logo = logo;
     }
 
     public int getId() {
@@ -221,4 +238,12 @@ public class InscricaoEquipe {
         this.cidade = cidade;
     }
 
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+    
 }

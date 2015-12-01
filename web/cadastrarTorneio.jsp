@@ -26,6 +26,9 @@
     </head>
     <body>
         
+        <!-- Inclusão do Menu Superior padrão -->
+        <jsp:include page="navbar.jsp" />        
+        
         <c:choose>
             <c:when test="${param != null && param.altTorneio != null}">
                 <h1 align="center">Alteração de Torneio</h1><h1></h1>
@@ -184,10 +187,8 @@
                             <button type="reset" class="btn btn-primary" style="margin-left: 5px; font-weight: bold;">Limpar</button>
                         </c:otherwise>
                     </c:choose>
-                    <button type="button" class="btn btn-primary" onclick="location.href='listarTorneio.jsp'" 
-                        style="margin-left: 5px; font-weight: bold;">Listar</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='index.jsp'" 
-                        style="margin-left: 3px; font-weight: bold;">Home</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='gerenciarTorneio.jsp'" 
+                        style="margin-left: 5px; font-weight: bold;">Gerenciar</button>
                 </div>
             </div>
             <c:if test="${message != null && !message.isEmpty()}">
